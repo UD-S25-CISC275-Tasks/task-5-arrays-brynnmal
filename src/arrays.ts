@@ -98,8 +98,14 @@ export function makeMath(addends: number[]): string {
  * And the array [1, 9, 7] would become [1, 9, 7, 17]
  */
 export function injectPositive(values: number[]): number[] {
-    let sum: number = 0;
-    values.map((num: number): number => sum = sum+num (num<0) ? sum: num);
-    console.log(values);
-    return values;
+    let index: number = values.findIndex((num: number): boolean => num<0);
+    if(index === -1){
+        return [...values, values.reduce((total: number, num: number)=> total+num, 0)];
+    }else{
+        let new_vals: number[] = values.slice(0, index);
+        let final: number[] = [...values];
+        final.splice(index+1, 0, new_vals.reduce((total: number, num: number)=> total+num, 0));
+        console.log(final);
+        return final;
+    }
 }
